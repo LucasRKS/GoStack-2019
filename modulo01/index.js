@@ -1,10 +1,11 @@
 const express = require('express');
 
 const app = express();
+app.use(express.json());
 
 /*
     ROTAS
-    BODY PARAMS  -> {nome: Lucas}
+    CRUD -> create, read, update, delete!!!!!
 */
 
 // QUERY PARAMS -> ?pagina=1 (Filtros e informações adicionais)
@@ -15,14 +16,47 @@ app.get('/testeQuery', (req,res) => {
 });
 
 const users = ['Diego', 'Lucas', 'Robertinho', 'Júnior'];
+
+//Lista todos os usuários
+app.get('/users', (req,res) => {
+    return res.json(users);
+});
+
 // ROUTE PARAM  -> user/editar/1 PUT E DELETE (GERALMENTE ID'S)
+//Lista um usuário
 app.get('/users/:index', (req,res) => {
     const { index } = req.params;
 
     return res.json({message: `Buscando o usuário ${users[index]}.`});
 });
 
+// BODY PARAMS  -> {nome: Lucas}
+app.post('/users', (req,res) => {
+    const { name } = req.body;
 
+    users.push(name);
+
+    return res.json(users);
+});
+
+//Edição de usuário (PUT)
+app.put('/users/:index', (req,res) => {
+    const { index } = req.params;
+    const { name }  = req.body;
+    
+    users[index] = name;
+
+    return res.json(users);
+});
+
+//Excluir 
+app.delete('/users/:index', (req,res) => {
+    const { index } = req.params;
+    
+    users.splice(index, 1);
+    
+    return res.json(users);
+});
 
 /*
     Porta
