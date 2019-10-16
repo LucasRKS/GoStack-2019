@@ -14,7 +14,7 @@ app.get('/testeQuery', (req,res) => {
     return res.json({message: `Olá Sr. ${nome}!` });
 });
 
-const users = ['Diego', 'Lucas', 'Robertinho'];
+const users = ['Diego', 'Lucas', 'Robertinho', 'Júnior'];
 // ROUTE PARAM  -> user/editar/1 PUT E DELETE (GERALMENTE ID'S)
 app.get('/users/:index', (req,res) => {
     const { index } = req.params;
