@@ -26,9 +26,13 @@ const checkUserExists = (req,res,next) => {
 
 //Verifica se existe o usuário no array
 const checkUserInArray = (req,res,next) => {
-    if(!users[req.params.index])
+    const user = users[req.params.index];
+
+    if(!user)
         return res.status(400).json({message: 'User does not exists.'});
     
+    req.user = user;
+
     return next();
 } 
 
@@ -58,7 +62,7 @@ app.get('/users', (req,res) => {
 app.get('/users/:index', checkUserInArray, checkUserInArray, (req,res) => {
     const { index } = req.params;
 
-    return res.json({message: `Buscando o usuário ${users[index]}.`});
+    return res.json({message: `Buscando o usuário ${req.user}.`});
 });
 
 // BODY PARAMS  -> {nome: Lucas}
@@ -82,7 +86,7 @@ app.put('/users/:index', checkUserExists, checkUserInArray, (req,res) => {
 });
 
 //Exclui um usuário
-app.delete('/users/:index', checkUserInArray, (req,res) => {
+app.delete('/users/:index', checkUserExists, checkUserInArray, (req,res) => {
     const { index } = req.params;
     
     users.splice(index, 1);
