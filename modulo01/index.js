@@ -5,10 +5,12 @@ app.use(express.json());
 
 /*
     ROTAS
-    CRUD -> create, read, update, delete!!!!!
 */
 
+// CRUD -> Create, Read, Update, Delete
+
 // QUERY PARAMS -> ?pagina=1 (Filtros e informações adicionais)
+//Primeira rota (teste)
 app.get('/testeQuery', (req,res) => {
     const { nome } = req.query; //?nome=Lucas
 
@@ -23,7 +25,7 @@ app.get('/users', (req,res) => {
 });
 
 // ROUTE PARAM  -> user/editar/1 PUT E DELETE (GERALMENTE ID'S)
-//Lista um usuário
+//Lista usuário pelo ID (ROUTE PARAMS)
 app.get('/users/:index', (req,res) => {
     const { index } = req.params;
 
@@ -31,6 +33,7 @@ app.get('/users/:index', (req,res) => {
 });
 
 // BODY PARAMS  -> {nome: Lucas}
+//Adiciona um usuário
 app.post('/users', (req,res) => {
     const { name } = req.body;
 
@@ -39,7 +42,7 @@ app.post('/users', (req,res) => {
     return res.json(users);
 });
 
-//Edição de usuário (PUT)
+//Edita um usuário
 app.put('/users/:index', (req,res) => {
     const { index } = req.params;
     const { name }  = req.body;
@@ -49,7 +52,7 @@ app.put('/users/:index', (req,res) => {
     return res.json(users);
 });
 
-//Excluir 
+//Exclui um usuário
 app.delete('/users/:index', (req,res) => {
     const { index } = req.params;
     
@@ -59,6 +62,6 @@ app.delete('/users/:index', (req,res) => {
 });
 
 /*
-    Porta
+    Porta da aplicação
 */
 app.listen(3333);
