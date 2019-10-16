@@ -16,6 +16,13 @@ app.use((req,res,next) => {
     console.timeEnd('Request');
 });
 
+const checkUserExists = (req,res,next) => {
+    if(!req.body.name)
+        return res.status(400).json({message: 'Username is required.'}); //Bad Request
+
+    return next();
+}
+
 /*
     ROTAS
 */
@@ -47,7 +54,7 @@ app.get('/users/:index', (req,res) => {
 
 // BODY PARAMS  -> {nome: Lucas}
 //Adiciona um usuário
-app.post('/users', (req,res) => {
+app.post('/users', checkUserExists, (req,res) => {
     const { name } = req.body;
 
     users.push(name);
@@ -56,7 +63,7 @@ app.post('/users', (req,res) => {
 });
 
 //Edita um usuário
-app.put('/users/:index', (req,res) => {
+app.put('/users/:index', checkUserExists, (req,res) => {
     const { index } = req.params;
     const { name }  = req.body;
     
