@@ -4,6 +4,19 @@ const app = express();
 app.use(express.json());
 
 /*
+    MIDDLEWARES (Fuções que sempre rodam ao requisitar uma rota)
+*/
+app.use((req,res,next) => {
+    console.time('Request');
+    console.log(`Método ${req.method} chamado pela URL ${req.url}.`);
+
+    //next -> não bloqueia a requisição
+    next();
+
+    console.timeEnd('Request');
+});
+
+/*
     ROTAS
 */
 
