@@ -16,12 +16,21 @@ app.use((req,res,next) => {
     console.timeEnd('Request');
 });
 
+//Verifica se foi passado o ID
 const checkUserExists = (req,res,next) => {
     if(!req.body.name)
         return res.status(400).json({message: 'Username is required.'}); //Bad Request
 
     return next();
 }
+
+//Verifica se existe o usuário no array
+const checkUserInArray = (req,res,next) => {
+    if(!users[req.params.index])
+        return res.status(400).json({message: 'User does not exists.'});
+    
+    return next();
+} 
 
 /*
     ROTAS
@@ -46,7 +55,7 @@ app.get('/users', (req,res) => {
 
 // ROUTE PARAM  -> user/editar/1 PUT E DELETE (GERALMENTE ID'S)
 //Lista usuário pelo ID (ROUTE PARAMS)
-app.get('/users/:index', (req,res) => {
+app.get('/users/:index', checkUserInArray, checkUserInArray, (req,res) => {
     const { index } = req.params;
 
     return res.json({message: `Buscando o usuário ${users[index]}.`});
@@ -63,7 +72,7 @@ app.post('/users', checkUserExists, (req,res) => {
 });
 
 //Edita um usuário
-app.put('/users/:index', checkUserExists, (req,res) => {
+app.put('/users/:index', checkUserExists, checkUserInArray, (req,res) => {
     const { index } = req.params;
     const { name }  = req.body;
     
@@ -73,7 +82,7 @@ app.put('/users/:index', checkUserExists, (req,res) => {
 });
 
 //Exclui um usuário
-app.delete('/users/:index', (req,res) => {
+app.delete('/users/:index', checkUserInArray, (req,res) => {
     const { index } = req.params;
     
     users.splice(index, 1);
