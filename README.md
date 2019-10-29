@@ -2,7 +2,5 @@
 Projeto desenvolvido ao longo da última GoStack de 2019 da Rocketseat.
 
 - Node.js
-- React 
-- React Native
 
 Bora codar!
