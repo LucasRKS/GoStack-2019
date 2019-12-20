@@ -1,10 +1,10 @@
 import React from 'react';
 import './App.css';
 
-import fruits from './assets/download (1).png';
+import TechList from './components/TechList';
 
 function App() {
-  return <img src={fruits} />
+  return <TechList />
 }
 
 export default App;
