@@ -14,7 +14,9 @@
     "babel-loader": "^8.0.6",
     "webpack": "^4.41.4",
     "webpack-cli": "^3.3.10",
-    "webpack-dev-server": "^3.10.1"
+    "webpack-dev-server": "^3.10.1",
+    "css-loader": "^3.4.0",
+    "style-loader": "^1.1.1"
   },
   "dependencies": {
     "react": "^16.12.0",
