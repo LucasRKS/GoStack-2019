@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 
 import api from '../../services/api';
 
-import { Container, Form, SubmmitButton, List } from './styles';
+import Container from '../../components/Container';
+import { Form, SubmmitButton, List } from './styles';
 
 export default class Main extends Component {
   state = {
