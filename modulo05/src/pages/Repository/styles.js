@@ -1,5 +1,26 @@
 import styled from 'styled-components';
 
+export const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+
+  span {
+    margin-top: 20px;
+    margin-bottom: 8px;
+    flex: 1;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  select {
+    flex: 1;
+    border: 1px solid #eee;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 4px;
+  }
+`;
+
 export const Loading = styled.div`
   color: #fff;
   font-size: 30px;

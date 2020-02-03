@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import api from '../../services/api';
 
 import Container from '../../components/Container';
-import { Owner, Loading, IssueList } from './styles';
+import { Owner, Loading, IssueList, Form } from './styles';
 
 export default class Repository extends Component {
   static propTypes = {
@@ -19,6 +19,7 @@ export default class Repository extends Component {
     repository: {},
     issues: [],
     loading: true,
+    option: 'open',
   };
 
   async componentDidMount() {
@@ -43,8 +44,26 @@ export default class Repository extends Component {
     });
   }
 
+  handleChange = async e => {
+    e.preventDefault();
+
+    const { match } = this.props;
+
+    const repoName = decodeURIComponent(match.params.repository);
+
+    this.setState({ loading: true, option: e.target.value });
+
+    const issues = await api.get(`/repos/${repoName}/issues`, {
+      params: {
+        state: e.target.value,
+      },
+    });
+
+    this.setState({ issues: issues.data, loading: false });
+  };
+
   render() {
-    const { repository, issues, loading } = this.state;
+    const { repository, issues, loading, option } = this.state;
 
     if (loading) {
       return <Loading>Carregando</Loading>;
@@ -58,6 +77,15 @@ export default class Repository extends Component {
           <h1>{repository.name}</h1>
           <p>{repository.description}</p>
         </Owner>
+
+        <Form>
+          <span>Status</span>
+          <select value={option} onChange={this.handleChange}>
+            <option value="open">Aberto</option>
+            <option value="all">Todos</option>
+            <option value="closed">Fechado</option>
+          </select>
+        </Form>
 
         <IssueList>
           {issues.map(issue => (
