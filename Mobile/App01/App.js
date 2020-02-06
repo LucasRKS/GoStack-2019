@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  View,
-  Text,
-} from 'react-native';
+import { View, Text } from 'react-native';
 
 function App() {
   return (
@@ -10,6 +7,6 @@ function App() {
       <Text>Meu app</Text>
     </View>
   );
-};
+}
 
 export default App;
