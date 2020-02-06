@@ -44,7 +44,7 @@ export default class Repository extends Component {
     });
   }
 
-  handleChange = async e => {
+  handleSelectChange = async e => {
     e.preventDefault();
 
     const { match } = this.props;
@@ -80,7 +80,7 @@ export default class Repository extends Component {
 
         <Form>
           <span>Status</span>
-          <select value={option} onChange={this.handleChange}>
+          <select value={option} onChange={this.handleSelectChange}>
             <option value="open">Aberto</option>
             <option value="all">Todos</option>
             <option value="closed">Fechado</option>
