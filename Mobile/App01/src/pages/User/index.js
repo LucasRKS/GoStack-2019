@@ -11,12 +11,12 @@ import {
   Name,
   Bio,
   Stars,
-  Starred,
   OwnerAvatar,
   Info,
   Title,
   Author,
   Reload,
+  StarredButton,
 } from './styles';
 
 export default class User extends Component {
@@ -27,6 +27,7 @@ export default class User extends Component {
   static propTypes = {
     navigation: PropTypes.shape({
       getParam: PropTypes.func,
+      navigate: PropTypes.func,
     }).isRequired,
   };
 
@@ -47,6 +48,14 @@ export default class User extends Component {
 
     this.setState({ stars: response.data, loadingStars: false });
   }
+
+  handleNavigate = repository => {
+    const { navigation } = this.props;
+
+    console.tron.log('aqui');
+
+    navigation.navigate('StarredRepository', { repository });
+  };
 
   async loadMoreStarred(user) {
     const { stars, page } = this.state;
@@ -93,13 +102,13 @@ export default class User extends Component {
             data={stars}
             keyExtractor={star => String(star.id)}
             renderItem={({ item }) => (
-              <Starred>
+              <StarredButton onPress={() => this.handleNavigate(item)}>
                 <OwnerAvatar source={{ uri: item.owner.avatar_url }} />
                 <Info>
                   <Title>{item.name}</Title>
                   <Author>{item.owner.login}</Author>
                 </Info>
-              </Starred>
+              </StarredButton>
             )}
           />
         )}
