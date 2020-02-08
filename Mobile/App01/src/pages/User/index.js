@@ -16,6 +16,7 @@ import {
   Info,
   Title,
   Author,
+  Reload,
 } from './styles';
 
 export default class User extends Component {
@@ -31,23 +32,24 @@ export default class User extends Component {
 
   state = {
     stars: [],
+    loadingStars: false,
   };
 
   async componentDidMount() {
     const { navigation } = this.props;
     const user = navigation.getParam('user');
 
+    this.setState({ loadingStars: true });
+
     const response = await api.get(`/users/${user.login}/starred`);
 
-    this.setState({ stars: response.data });
+    this.setState({ stars: response.data, loadingStars: false });
   }
 
   render() {
     const { navigation } = this.props;
-    const { stars } = this.state;
+    const { stars, loadingStars } = this.state;
     const user = navigation.getParam('user');
-
-    console.tron.log('alo');
 
     return (
       <Container>
@@ -56,20 +58,25 @@ export default class User extends Component {
           <Name>{user.name}</Name>
           <Bio>{user.bio}</Bio>
         </Header>
-
-        <Stars
-          data={stars}
-          keyExtractor={star => String(star.id)}
-          renderItem={({ item }) => (
-            <Starred>
-              <OwnerAvatar source={{ uri: item.owner.avatar_url }} />
-              <Info>
-                <Title>{item.name}</Title>
-                <Author>{item.owner.login}</Author>
-              </Info>
-            </Starred>
-          )}
-        />
+        {loadingStars ? (
+          <Reload>
+            <ActivityIndicator color="#FFF " size="large" />
+          </Reload>
+        ) : (
+          <Stars
+            data={stars}
+            keyExtractor={star => String(star.id)}
+            renderItem={({ item }) => (
+              <Starred>
+                <OwnerAvatar source={{ uri: item.owner.avatar_url }} />
+                <Info>
+                  <Title>{item.name}</Title>
+                  <Author>{item.owner.login}</Author>
+                </Info>
+              </Starred>
+            )}
+          />
+        )}
       </Container>
     );
   }

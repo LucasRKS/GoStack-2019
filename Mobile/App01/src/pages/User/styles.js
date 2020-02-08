@@ -75,3 +75,7 @@ export const Author = styled.Text`
   color: #666;
   margin-top: 2px;
 `;
+
+export const Reload = styled.View`
+  margin-top: 20px;
+`;
