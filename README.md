@@ -1,7 +1,7 @@
 # Bootcamp-GoStack-2019
 
-Introduções aos projetos desenvolvidos GoStack de 2019.
+Projetos realizados durante o bootcamp da Rocketseat em 2019.
 
-- Node.js
-- React
-- React Native
+- Node.js (backend)
+- ReactJS (frontend)
+- React Native (mobile)
